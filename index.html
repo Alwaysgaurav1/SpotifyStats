@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpotifyStats — Your Music DNA</title>
+  <meta name="description" content="Visualize your Spotify listening habits with beautiful charts and stats">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== LOGIN SCREEN ===== -->
+  <section id="loginScreen" class="login-screen">
+    <div class="login-container">
+      <div class="login-logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" width="64" height="64" fill="#1DB954">
+            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+          </svg>
+        </div>
+        <h1 class="login-title">Spotify<span class="accent">Stats</span></h1>
+        <p class="login-subtitle">Discover your music DNA</p>
+      </div>
+
+      <div class="login-features">
+        <div class="feature-item">
+          <span class="feature-icon">🎵</span>
+          <span>See your top artists & tracks</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📊</span>
+          <span>Beautiful genre charts</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🕐</span>
+          <span>Explore your listening history</span>
+        </div>
+      </div>
+
+      <button id="loginBtn" class="login-btn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
+          <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+        </svg>
+        Connect with Spotify
+      </button>
+
+      <p class="login-note">We only read your data. Nothing is stored or shared.</p>
+    </div>
+
+    <div class="login-bg-circles">
+      <div class="circle circle-1"></div>
+      <div class="circle circle-2"></div>
+      <div class="circle circle-3"></div>
+    </div>
+  </section>
+
+  <!-- ===== LOADING SCREEN ===== -->
+  <section id="loadingScreen" class="loading-screen hidden">
+    <div class="loader-container">
+      <div class="loader-bars">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      <p class="loader-text">Analyzing your music taste...</p>
+    </div>
+  </section>
+
+  <!-- ===== DASHBOARD ===== -->
+  <section id="dashboard" class="dashboard hidden">
+
+    <!-- Header -->
+    <header class="dash-header">
+      <div class="dash-header-left">
+        <h1 class="dash-logo">Spotify<span class="accent">Stats</span></h1>
+      </div>
+      <div class="dash-header-right">
+        <div class="time-range-picker">
+          <button class="range-btn active" data-range="short_term">4 Weeks</button>
+          <button class="range-btn" data-range="medium_term">6 Months</button>
+          <button class="range-btn" data-range="long_term">All Time</button>
+        </div>
+        <div id="userAvatar" class="user-avatar"></div>
+      </div>
+    </header>
+
+    <!-- Profile Card -->
+    <div class="dash-grid">
+      <div class="card profile-card" id="profileCard">
+        <div class="profile-info">
+          <img id="profileImg" class="profile-img" src="" alt="Profile">
+          <div>
+            <h2 id="profileName" class="profile-name"></h2>
+            <p id="profileMeta" class="profile-meta"></p>
+          </div>
+        </div>
+        <div class="profile-stats">
+          <div class="stat-pill">
+            <span class="stat-label">Followers</span>
+            <span id="profileFollowers" class="stat-value">0</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-label">Plan</span>
+            <span id="profilePlan" class="stat-value">—</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-label">Country</span>
+            <span id="profileCountry" class="stat-value">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fun Stats -->
+      <div class="card fun-stats-card">
+        <h3 class="card-title">🎯 Your Music DNA</h3>
+        <div id="funStats" class="fun-stats-grid"></div>
+      </div>
+    </div>
+
+    <!-- Top Artists -->
+    <div class="card">
+      <h3 class="card-title">🎤 Top Artists</h3>
+      <div id="topArtists" class="artists-grid"></div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="dash-grid">
+      <div class="card">
+        <h3 class="card-title">🎸 Top Genres</h3>
+        <div class="chart-container">
+          <canvas id="genreChart"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="card-title">📈 Artist Popularity</h3>
+        <div class="chart-container">
+          <canvas id="popularityChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Tracks -->
+    <div class="card">
+      <h3 class="card-title">🔥 Top Tracks</h3>
+      <div id="topTracks" class="tracks-list"></div>
+    </div>
+
+    <!-- Recently Played -->
+    <div class="card">
+      <h3 class="card-title">🕐 Recently Played</h3>
+      <div id="recentTracks" class="tracks-list"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="dash-footer">
+      <p>SpotifyStats • Not affiliated with Spotify AB • Made with ❤️ by Gaurav Kumar Pandey</p>
+    </footer>
+  </section>
+
+  <script src="js/auth.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
