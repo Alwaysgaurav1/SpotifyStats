@@ -4,8 +4,8 @@
 
 const SpotifyAuth = (function () {
   // ⚠️ REPLACE THIS with your Client ID from developer.spotify.com/dashboard
-  const CLIENT_ID = 'YOUR_CLIENT_ID_HERE';
-  const REDIRECT_URI = window.location.origin + window.location.pathname;
+  const CLIENT_ID = 'e981d0041957482f82ab11f46b68f051';
+  const REDIRECT_URI = 'http://127.0.0.1:8000';
   const SCOPES = [
     'user-read-private',
     'user-read-email',
